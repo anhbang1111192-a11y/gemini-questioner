@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 const app = express();
 app.use(express.json());
 
-const GEMINI_API_KEY = "YOUR_API_KEY_HERE";  // <<< DÁN KEY VÀO ĐÂY
+const GEMINI_API_KEY = "AIzaSyD6e2z_T5n8DP8iPOp1eWP7HLBcuviwB5Y";  // <<< DÁN KEY VÀO ĐÂY
 
 app.post("/ask", async (req, res) => {
     try {
@@ -36,3 +36,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Server running on port " + PORT);
 });
+
