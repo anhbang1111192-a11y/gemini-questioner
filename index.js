@@ -4,36 +4,40 @@ import fetch from "node-fetch";
 const app = express();
 app.use(express.json());
 
-const GEMINI_API_KEY = "AIzaSyD6e2z_T5n8DP8iPOp1eWP7HLBcuviwB5Y";  // <<< DÁN KEY VÀO ĐÂY
+// DÁN KEY VÔ ĐÂY
+const GEMINI_API_KEY = "AIzaSyD6e2z_T5n8DP8iPOp1eWP7HLBcuviwB5Y";
 
 app.post("/ask", async (req, res) => {
-    try {
-        const question = req.body.question || "Hello";
+  try {
+    const question = req.body.question || "Hello";
 
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText?key=${GEMINI_API_KEY}`,
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
             {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    prompt: { text: question }
-                })
+              parts: [{ text: question }]
             }
-        );
+          ]
+        })
+      }
+    );
 
-        const data = await response.json();
-        res.json(data);
+    const data = await response.json();
+    res.json(data);
 
-    } catch (err) {
-        res.status(500).json({ 
-            error: "Server error", 
-            details: err.message 
-        });
-    }
+  } catch (err) {
+    res.status(500).json({
+      error: "Server error",
+      details: err.message
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log("Server running on port " + PORT);
+  console.log("Server running on port " + PORT);
 });
-
