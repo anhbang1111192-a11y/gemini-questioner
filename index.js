@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 const app = express();
 app.use(express.json());
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_API_KEY = "YOUR_API_KEY_HERE";  // <<< DÁN KEY VÀO ĐÂY
 
 app.post("/ask", async (req, res) => {
     try {
@@ -23,8 +23,12 @@ app.post("/ask", async (req, res) => {
 
         const data = await response.json();
         res.json(data);
+
     } catch (err) {
-        res.status(500).json({ error: "Server error", details: err.message });
+        res.status(500).json({ 
+            error: "Server error", 
+            details: err.message 
+        });
     }
 });
 
